@@ -38,12 +38,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String [] allowedPaths = {
+                "/CineTickets-Service/generateToken",
+                "/CineTickets-Service/addNewUser",
+                "/CineTickets-Service/pagos/**",
+                "/CineTickets-Service/user/**",
+        "CineTickets-Service/peliculas/**",
+        "CineTickets-Service/funciones/**",
+        "CineTickets-Service/compras/**",
+        "CineTickets-Service/detalleCompras/**",};
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorized) -> authorized
-
                         .requestMatchers("/CineTickets-Service/user/**").authenticated()
                         .requestMatchers("/CineTickets-Service/admin/**").authenticated()
-                .requestMatchers("/CineTickets-Service/addNewUser", "/CineTickets-Service/generateToken", "/CineTickets-Service/peliculas/**").permitAll().anyRequest().authenticated());
+                        .requestMatchers(allowedPaths).permitAll().anyRequest().authenticated());
         http.sessionManagement((sessions) -> sessions
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //
         http.authenticationProvider(authenticationProvider())
@@ -57,7 +65,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//  Este método se utiliza para crear un objeto AuthenticationProvider que se utiliza para autenticar al usuario
+    //  Este método se utiliza para crear un objeto AuthenticationProvider que se utiliza para autenticar al usuario
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();

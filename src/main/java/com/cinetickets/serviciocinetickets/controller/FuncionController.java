@@ -5,6 +5,7 @@ import com.cinetickets.serviciocinetickets.entities.Peliculas;
 import com.cinetickets.serviciocinetickets.repository.FuncionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -19,16 +20,19 @@ public class FuncionController {
          this.repository = repository;
      }
     @PutMapping("/funciones") //Metodo que actualiza una funcion
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Funcion actualizarFuncion(@RequestBody Funcion funcion) {
         return this.repository.save(funcion);
     }
 
     @PostMapping("/funciones") //Metodo que guarda una funcion
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Funcion guardarFuncion(@RequestBody Funcion funcion) {
         return this.repository.save(funcion);
     }
 
     @DeleteMapping("/funciones/{id}") //Metodo que elimina una funcion por id
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public void eliminarFuncion(@PathVariable int id) {
          Optional<Funcion> funcion = this.repository.findById(id);
         funcion.ifPresent(value -> this.repository.delete(value));

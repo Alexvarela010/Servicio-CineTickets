@@ -3,10 +3,13 @@ package com.cinetickets.serviciocinetickets.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "peliculas")
 public class Peliculas {
 
     @Id
@@ -17,4 +20,6 @@ public class Peliculas {
     private String categoria;
     private String duracion;
     private String estado;
+    private String imagen;
+    private BigDecimal precioEntrada;
 }

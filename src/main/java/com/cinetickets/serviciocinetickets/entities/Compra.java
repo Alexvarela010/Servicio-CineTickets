@@ -15,8 +15,10 @@ public class Compra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int compraId;
-    private Long usuarioId;
-    private Long peliculaId;
+    @ManyToOne
+    private UserInfo userInfo;
+    @ManyToOne
+    private Peliculas pelicula;
     private BigDecimal precioTotal;
     private Integer cantidadTickets;
     private LocalDate fechaCompra;
