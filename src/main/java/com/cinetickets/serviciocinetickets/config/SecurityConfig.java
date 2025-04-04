@@ -40,9 +40,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorized) -> authorized
-                        .requestMatchers("/CineTickets-Service/addNewUser", "/CineTickets-Service/generateToken", "/CineTickets-Service/peliculas").permitAll()
+
                         .requestMatchers("/CineTickets-Service/user/**").authenticated()
-                        .requestMatchers("/CineTickets-Service/admin/**").authenticated());
+                        .requestMatchers("/CineTickets-Service/admin/**").authenticated()
+                .requestMatchers("/CineTickets-Service/addNewUser", "/CineTickets-Service/generateToken", "/CineTickets-Service/peliculas/**").permitAll().anyRequest().authenticated());
         http.sessionManagement((sessions) -> sessions
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //
         http.authenticationProvider(authenticationProvider())

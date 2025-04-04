@@ -3,21 +3,18 @@ package com.cinetickets.serviciocinetickets.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfo {
+public class Peliculas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(unique = true)
-    private String name;
-    private String email;
-    private String password;
-    private String roles;
-    private String telefono;
+    private int peliculaId;
+    private String titulo;
+    private String descripcion;
+    private String categoria;
+    private String duracion;
     private String estado;
 }

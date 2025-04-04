@@ -2,6 +2,7 @@ package com.cinetickets.serviciocinetickets.controller;
 
 import com.cinetickets.serviciocinetickets.entities.AuthRequest;
 import com.cinetickets.serviciocinetickets.entities.UserInfo;
+import com.cinetickets.serviciocinetickets.repository.UserInfoRepository;
 import com.cinetickets.serviciocinetickets.service.JwtService;
 import com.cinetickets.serviciocinetickets.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +14,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/CineTickets-Service")
 public class UserController {
 
-
+    private UserInfoRepository userInfoRepository;
     private UserInfoService service; // inyecta una instancia del servicio UserInfoService, que se utiliza para gestionar la información del usuario en la base de datos.
 
     private JwtService jwtService; // Inyecta una instancia del servicio JwtService, que se utiliza para generar tokens JWT y gestionar la autenticación.
@@ -27,16 +30,17 @@ public class UserController {
 
 
     @Autowired
-    public UserController(UserInfoService service, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public UserController(UserInfoService service, JwtService jwtService, AuthenticationManager authenticationManager, UserInfoRepository userInfoRepository) {
         this.service = service;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.userInfoRepository=userInfoRepository;
     }
 
 
 
     @PostMapping("/addNewUser")
-    public UserInfo addNewUser(@RequestBody UserInfo userInfo) {
+    public String addNewUser(@RequestBody UserInfo userInfo) {
         return service.addUser(userInfo);
     }
 
@@ -44,6 +48,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String userProfile() {
         return "bienvenido a perfil usuario";
+    }
+
+    @GetMapping("/user/allusers")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public List<UserInfo> ListarUsuarios() {
+        return this.userInfoRepository.findAll();
     }
 
 
