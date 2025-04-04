@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  servicio_CineTickets:
+    container_name: servicio-CineTickets
+    image: servicio-cinetickets:0.0.1
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - DB_URL=jdbc:postgresql://CineTickets_db:5432/CineTickets
+      - DB_USERNAME=cinetickets
+      - DB_PASSWORD=a1b2c3d4
+    depends_on:
+      - CineTickets_db
+  CineTickets_db:
+    container_name: CineTickets_db
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=cinetickets
+      - POSTGRES_PASSWORD=a1b2c3d4
+      - POSTGRES_DB=CineTickets
+      - JPA_DDL:update
+
+
