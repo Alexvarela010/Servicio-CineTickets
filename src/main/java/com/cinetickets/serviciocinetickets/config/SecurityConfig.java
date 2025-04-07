@@ -45,10 +45,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         String [] allowedPaths = {
                 "/CineTickets-Service/generateToken",
-                "/CineTickets-Service/addNewUser",
                 "/CineTickets-Service/pagos/**",
-                "/CineTickets-Service/user/**",
         "CineTickets-Service/peliculas/**",
+        "CineTickets-Service/usuarios/**",
         "CineTickets-Service/funciones/**",
         "CineTickets-Service/compras/**",
         "CineTickets-Service/detalleCompras/**",};

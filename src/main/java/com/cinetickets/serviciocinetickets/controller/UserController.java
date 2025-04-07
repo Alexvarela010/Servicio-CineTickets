@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,33 +34,31 @@ public class UserController {
         this.service = service;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
-        this.userInfoRepository=userInfoRepository;
+        this.userInfoRepository = userInfoRepository;
     }
 
-    @PostMapping("/addNewUser")
+    @PostMapping("/usuarios")
     public String addNewUser(@RequestBody UserInfo userInfo) {
         return service.addUser(userInfo);
     }
 
-    @GetMapping("/user/userProfile")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public String userProfile() {
-        return "bienvenido a perfil usuario";
-    }
-
-    @GetMapping("/user/allusers")
+    @GetMapping("/usuarios")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<UserInfo> ListarUsuarios() {
         return this.userInfoRepository.findAll();
     }
 
-
-    @GetMapping("/admin/adminProfile")
+    @PutMapping("/usuarios")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String adminProfile() {
-        return "Perfil administrador";
+    public UserInfo actualizarUsuario(@RequestBody UserInfo usuario) {
+        return this.userInfoRepository.save(usuario);
     }
 
+    @GetMapping("/usuarios/{id}")
+    public UserInfo buscarUsuario(@PathVariable int id) {
+        Optional<UserInfo> usuario = this.userInfoRepository.findById(id);
+        return usuario.orElse(null);
+    }
 
     @PostMapping("/generateToken")
     public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
