@@ -1,6 +1,5 @@
 package com.cinetickets.serviciocinetickets.controller;
 
-import com.cinetickets.serviciocinetickets.entities.Detallecompra;
 import com.cinetickets.serviciocinetickets.entities.Funcion;
 import com.cinetickets.serviciocinetickets.repository.FuncionRepository;
 import lombok.RequiredArgsConstructor;
