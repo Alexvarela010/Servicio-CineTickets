@@ -21,5 +21,6 @@ public class Peliculas {
     private String duracion;
     private String estado;
     private String imagen;
+    private String imagenCarrusel;
     private BigDecimal precioEntrada;
 }

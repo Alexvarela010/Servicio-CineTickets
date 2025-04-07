@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 
 public class UserInfoDetails implements UserDetails {
 
-    private String name;
+    private String email;
     private String password;
     private List<GrantedAuthority> authorities; // Almacena las autoridades (roles) del usuario como una lista de objetos GrantedAuthority.
 
     public UserInfoDetails(UserInfo userInfo) { // Constructor que toma un objeto UserInfo y lo convierte en un objeto UserDetails.
-        name = userInfo.getName();
+        email = userInfo.getEmail();
         password = userInfo.getPassword();
         authorities = Arrays.stream(userInfo.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
@@ -38,7 +38,7 @@ public class UserInfoDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

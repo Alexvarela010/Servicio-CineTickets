@@ -4,6 +4,7 @@ import com.cinetickets.serviciocinetickets.entities.Compra;
 import com.cinetickets.serviciocinetickets.repository.CompraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,4 +40,10 @@ public class CompraController {
         return this.repository.save(compra);
     }
 
+    @DeleteMapping("/compras/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public void eliminarCompra(@PathVariable int id) {
+        Optional<Compra> compras = this.repository.findById(id);
+        compras.ifPresent(Compra -> this.repository.delete(Compra));
+    }
 }
