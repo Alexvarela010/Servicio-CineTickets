@@ -37,7 +37,7 @@ public class UserController {
         this.userInfoRepository = userInfoRepository;
     }
 
-    @PostMapping("/usuarios")
+    @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody UserInfo userInfo) {
         return service.addUser(userInfo);
     }

@@ -43,14 +43,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        String [] allowedPaths = {
+        String[] allowedPaths = {
                 "/CineTickets-Service/generateToken",
+                "/CineTickets-Service/addNewUser",
                 "/CineTickets-Service/pagos/**",
-        "CineTickets-Service/peliculas/**",
-        "CineTickets-Service/usuarios/**",
-        "CineTickets-Service/funciones/**",
-        "CineTickets-Service/compras/**",
-        "CineTickets-Service/detalleCompras/**",};
+                "/CineTickets-Service/user/**",
+                "CineTickets-Service/peliculas/**",
+                "CineTickets-Service/usuarios/**",
+                "CineTickets-Service/funciones/**",
+                "CineTickets-Service/compras/**",
+                "CineTickets-Service/detalleCompras/**",};
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorized) -> authorized
                         .requestMatchers("/CineTickets-Service/user/**").authenticated()
@@ -60,7 +62,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //
         http.authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).
-        cors(AbstractHttpConfigurer::disable);
+                cors(AbstractHttpConfigurer::disable);
         return http.build();
     }
 
@@ -83,6 +85,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
