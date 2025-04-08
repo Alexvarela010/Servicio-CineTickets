@@ -34,14 +34,13 @@ public class CompraController {
     public Compra actualizarCompra(@RequestBody Compra compra) {
         return this.repository.save(compra);
     }
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("/compras") //Metodo que guarda una compra
     public Compra guardarCompra(@RequestBody Compra compra) {
         return this.repository.save(compra);
     }
 
     @DeleteMapping("/compras/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public void eliminarCompra(@PathVariable int id) {
         Optional<Compra> compras = this.repository.findById(id);
         compras.ifPresent(Compra -> this.repository.delete(Compra));

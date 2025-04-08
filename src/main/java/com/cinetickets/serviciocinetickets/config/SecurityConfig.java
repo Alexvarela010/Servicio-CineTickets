@@ -52,7 +52,7 @@ public class SecurityConfig {
                 "CineTickets-Service/usuarios/**",
                 "CineTickets-Service/funciones/**",
                 "CineTickets-Service/compras/**",
-                "CineTickets-Service/detalleCompras/**",};
+                "CineTickets-Service/detallecompras/**",};
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorized) -> authorized
                         .requestMatchers("/CineTickets-Service/user/**").authenticated()

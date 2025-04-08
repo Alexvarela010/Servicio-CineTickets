@@ -60,6 +60,12 @@ public class UserController {
         return usuario.orElse(null);
     }
 
+    @GetMapping("/usuarios/id/{email}")
+    public int getIdUsuario(@PathVariable String email) {
+        Optional<UserInfo> usuario = this.userInfoRepository.findByEmail(email);
+        return usuario.map(UserInfo::getId).orElse(-1);
+    }
+
     @PostMapping("/generateToken")
     public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));

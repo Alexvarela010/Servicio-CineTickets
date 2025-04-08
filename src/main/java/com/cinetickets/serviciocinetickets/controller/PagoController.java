@@ -25,7 +25,6 @@ public class PagoController {
     }
 
     @GetMapping("/pagos") //Metodo que lista los pagos
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<Pago> listarPagos() {
         return this.repository.findAll();
     }
